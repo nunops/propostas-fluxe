@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Steve Marqué — Proposal</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:#0e1117;color:#c8cdd5;font-family:'Outfit',sans-serif;font-weight:400;line-height:1.7;font-size:1rem;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+:root{
+  --slate:#3d4f5f;--slate-dark:#1a2332;--slate-mid:rgba(61,79,95,.2);
+  --accent:#5a8fa8;--accent-glow:rgba(90,143,168,.25);
+  --gold:#d4a853;--gold-glow:rgba(212,168,83,.2);
+  --bg:#0e1117;--bg-card:rgba(255,255,255,.03);
+  --text:#c8cdd5;--text-bright:#eef1f5;--text-dim:#6b7280;
+  --border:rgba(255,255,255,.06);
+  --gradient-dark:linear-gradient(180deg,#0e1117 0%,#141a24 100%);
+  --gradient-section:linear-gradient(180deg,#141a24 0%,#0e1117 100%);
+}
+::selection{background:var(--accent);color:#fff}
+/* Grain overlay */
+body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;opacity:.03;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+section{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:12vh 8vw;position:relative}
+.content{max-width:700px;margin:0 auto;width:100%}
+.wide-content{max-width:960px;margin:0 auto;width:100%}
+/* Labels */
+.label{font-family:'Space Mono',monospace;font-size:.65rem;letter-spacing:4px;text-transform:uppercase;color:var(--accent);font-weight:400;margin-bottom:2.5rem;position:relative;display:inline-block}
+.label::after{content:'';position:absolute;bottom:-8px;left:0;width:40px;height:1px;background:var(--accent);opacity:.5}
+/* ===== OPENING ===== */
+.opening{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden}
+.opening::before{content:'';position:absolute;top:50%;left:50%;width:600px;height:600px;background:radial-gradient(circle,var(--accent-glow) 0%,transparent 70%);transform:translate(-50%,-50%);animation:pulse-glow 6s ease-in-out infinite;pointer-events:none}
+@keyframes pulse-glow{0%,100%{opacity:.3;transform:translate(-50%,-50%) scale(1)}50%{opacity:.6;transform:translate(-50%,-50%) scale(1.2)}}
+.opening .date{font-family:'Space Mono',monospace;font-size:.7rem;letter-spacing:4px;text-transform:uppercase;color:var(--accent);opacity:0;animation:typeIn .8s ease forwards .5s}
+.opening .name{font-size:clamp(3rem,7vw,6rem);font-weight:900;color:var(--text-bright);letter-spacing:-.04em;line-height:1;margin:1.5rem 0 1rem;opacity:0;animation:scaleIn 1s cubic-bezier(.16,1,.3,1) forwards .8s}
+.opening .name em{font-style:normal;color:var(--gold);position:relative}
+.opening .name em::after{content:'';position:absolute;bottom:-.1em;left:0;right:0;height:3px;background:var(--gold);opacity:.4;border-radius:2px}
+.opening .sub{font-size:1.05rem;color:var(--text-dim);font-weight:300;opacity:0;animation:typeIn 1s ease forwards 1.3s}
+.opening .scroll-hint{position:absolute;bottom:5vh;left:50%;transform:translateX(-50%);opacity:0;animation:fadeIn 1s ease forwards 2.5s}
+.opening .scroll-hint span{display:block;width:1px;height:40px;background:linear-gradient(to bottom,var(--accent),transparent);margin:0 auto;animation:scroll-line 2s ease-in-out infinite}
+@keyframes typeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes scaleIn{from{opacity:0;transform:scale(.92) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes scroll-line{0%,100%{opacity:0;transform:scaleY(.3)}50%{opacity:1;transform:scaleY(1)}}
+/* ===== MIRROR ===== */
+.mirror{background:var(--gradient-dark)}
+.quote-block{padding:1.5rem 2rem;margin-bottom:.8rem;border-left:2px solid transparent;border-radius:0 8px 8px 0;transition:all .5s cubic-bezier(.25,.46,.45,.94);cursor:default;position:relative;overflow:hidden}
+.quote-block::before{content:'';position:absolute;left:0;top:0;bottom:0;width:0;background:rgba(90,143,168,.06);transition:width .5s ease;z-index:0}
+.quote-block:hover::before{width:100%}
+.quote-block:hover{border-left-color:var(--accent);transform:translateX(8px)}
+.quote-text{font-size:1.2rem;font-weight:300;color:var(--text);line-height:1.6;position:relative;z-index:1;transition:color .3s ease}
+.quote-block:hover .quote-text{color:var(--text-bright)}
+.quote-context{font-family:'Space Mono',monospace;font-size:.6rem;color:var(--text-dim);margin-top:.5rem;letter-spacing:1px;text-transform:uppercase;position:relative;z-index:1}
+/* ===== DIAGNOSIS ===== */
+.diagnosis{background:var(--gradient-section)}
+.diag-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:2rem;margin-bottom:1.2rem;transition:all .4s cubic-bezier(.25,.46,.45,.94);cursor:default;position:relative;overflow:hidden}
+.diag-card::after{content:'';position:absolute;top:-50%;right:-50%;width:100%;height:100%;background:radial-gradient(circle,var(--accent-glow) 0%,transparent 70%);opacity:0;transition:opacity .5s ease;pointer-events:none}
+.diag-card:hover{transform:translateY(-4px);border-color:rgba(90,143,168,.25);box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.diag-card:hover::after{opacity:1}
+.diag-headline{font-size:1.15rem;font-weight:700;color:var(--accent);margin-bottom:.6rem;position:relative;z-index:1}
+.diag-text{color:var(--text-dim);font-size:.9rem;line-height:1.8;position:relative;z-index:1}
+/* Pipeline */
+.pipeline{display:flex;align-items:center;justify-content:center;gap:0;margin-top:3rem;padding:2rem 0;overflow:visible}
+.pipe-card{min-width:115px;max-width:135px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:1rem .7rem;text-align:center;transition:all .4s cubic-bezier(.25,.46,.45,.94);cursor:default;flex-shrink:0}
+.pipe-card:hover{transform:translateY(-5px);box-shadow:0 12px 40px rgba(0,0,0,.4)}
+.pipe-card.active{border-color:rgba(90,143,168,.2)}
+.pipe-card.active:hover{border-color:var(--accent)}
+.pipe-card.missing{border:1px dashed rgba(212,168,83,.3);background:rgba(212,168,83,.03)}
+.pipe-card.missing:hover{border-color:var(--gold);box-shadow:0 12px 40px rgba(212,168,83,.1)}
+.pipe-icon{margin-bottom:.4rem}
+.pipe-icon svg{transition:all .4s ease}
+.pipe-card:hover .pipe-icon svg{transform:scale(1.15);filter:drop-shadow(0 0 8px var(--accent-glow))}
+.pipe-card.missing:hover .pipe-icon svg{filter:drop-shadow(0 0 8px var(--gold-glow))}
+.pipe-title{font-size:.58rem;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--text-dim);margin-bottom:.3rem;transition:color .3s ease}
+.pipe-card:hover .pipe-title{color:var(--text)}
+.pipe-status{font-family:'Space Mono',monospace;font-size:.5rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:2px 8px;border-radius:10px;display:inline-block;margin-top:.2rem}
+.pipe-status.exists{background:rgba(90,143,168,.12);color:var(--accent)}
+.pipe-status.missing-s{background:rgba(212,168,83,.1);color:var(--gold)}
+.pipe-arrow{color:var(--text-dim);font-size:.9rem;align-self:center;flex-shrink:0;padding:0 .3rem;opacity:.25;transition:opacity .3s ease}
+.zone-wrapper{border:1px solid rgba(212,168,83,.15);border-radius:16px;padding:2.5rem 1rem 1.2rem;position:relative;display:flex;gap:0;align-items:center;overflow:visible;transition:border-color .4s ease}
+.zone-wrapper:hover{border-color:rgba(212,168,83,.3)}
+.zone-label{position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--bg);border:1px solid rgba(212,168,83,.25);color:var(--gold);font-family:'Space Mono',monospace;font-size:.5rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:3px 16px;border-radius:20px;white-space:nowrap;z-index:1}
+.pipeline-footer{text-align:center;margin-top:2rem;color:var(--accent);font-size:.95rem;font-weight:500;opacity:.7}
+/* ===== VISION ===== */
+.vision{background:var(--gradient-dark)}
+.vision-line{padding:1rem 1.5rem;margin-bottom:1rem;border-left:2px solid transparent;transition:all .4s cubic-bezier(.25,.46,.45,.94);cursor:default;position:relative}
+.vision-line::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--accent),transparent);opacity:0;transition:opacity .4s ease}
+.vision-line:hover{transform:translateX(8px)}
+.vision-line:hover::before{opacity:1}
+.vision-text{font-size:1.25rem;font-weight:300;color:var(--text);line-height:1.6}
+.vision-highlight{color:var(--gold);font-weight:600;transition:text-shadow .4s ease}
+.vision-line:hover .vision-highlight{text-shadow:0 0 20px var(--gold-glow)}
+/* ===== BRIDGE / TIMELINE ===== */
+.bridge{background:var(--gradient-section)}
+.timeline{position:relative;padding-left:40px;margin-top:2rem}
+.timeline::before{content:'';position:absolute;left:8px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--accent),rgba(90,143,168,.1))}
+.tl-item{position:relative;margin-bottom:1.8rem;padding:.8rem 1.2rem;border-radius:8px;transition:all .4s ease;cursor:default}
+.tl-item:hover{background:rgba(90,143,168,.04)}
+.tl-item:hover .tl-dot{box-shadow:0 0 15px var(--accent-glow);transform:scale(1.5)}
+.tl-item:hover .tl-tag{color:var(--accent)}
+.tl-dot{position:absolute;left:-38px;top:1rem;width:10px;height:10px;background:var(--accent);border-radius:50%;opacity:.6;transition:all .4s cubic-bezier(.25,.46,.45,.94)}
+.tl-dot.key{width:14px;height:14px;left:-40px;opacity:1;box-shadow:0 0 10px var(--accent-glow)}
+.tl-tag{font-family:'Space Mono',monospace;font-size:.7rem;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:.5px;margin-bottom:.3rem;transition:color .3s ease}
+.tl-desc{color:var(--text-dim);font-size:.88rem;line-height:1.7}
+.tl-divider{text-align:center;margin:2.5rem 0;position:relative}
+.tl-divider::before{content:'';position:absolute;left:0;right:0;top:50%;height:1px;background:linear-gradient(90deg,transparent,var(--accent-glow),transparent)}
+.tl-divider-pill{position:relative;display:inline-block;background:var(--bg);border:1px solid rgba(90,143,168,.3);color:var(--accent);font-family:'Space Mono',monospace;font-size:.55rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:6px 20px;border-radius:20px}
+.tl-note{text-align:center;margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border);font-style:italic;color:var(--text-dim);font-size:.8rem}
+/* ===== SOCIAL PROOF ===== */
+.social-proof{background:var(--gradient-dark);min-height:auto;padding-top:12vh;padding-bottom:12vh}
+.testimonial{display:flex;gap:1.5rem;margin-bottom:2rem;padding:2rem;border-radius:12px;background:var(--bg-card);border:1px solid var(--border);transition:all .5s cubic-bezier(.25,.46,.45,.94);position:relative;overflow:hidden}
+.testimonial::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--accent-glow),transparent);opacity:0;transition:opacity .5s ease}
+.testimonial:hover{border-color:rgba(90,143,168,.2);box-shadow:0 20px 60px rgba(0,0,0,.3);transform:translateY(-3px)}
+.testimonial:hover::before{opacity:1}
+.test-photo-wrap{width:64px;height:64px;border-radius:50%;overflow:hidden;flex-shrink:0;border:2px solid var(--border);transition:border-color .3s ease;background:var(--bg)}
+.testimonial:hover .test-photo-wrap{border-color:var(--accent)}
+.test-photo{width:130%;height:130%;margin:-15% 0 0 -15%;object-fit:cover;object-position:center center;display:block}
+.test-content{flex:1}
+.test-name{font-size:1.05rem;font-weight:700;color:var(--text-bright);margin-bottom:.1rem}
+.test-role{font-family:'Space Mono',monospace;font-size:.6rem;color:var(--text-dim);font-weight:400;margin-bottom:.8rem;letter-spacing:.5px}
+.test-story{color:var(--text-dim);font-size:.88rem;line-height:1.7;margin-bottom:1rem}
+.test-metrics{display:flex;gap:2rem;margin-bottom:1rem;flex-wrap:wrap}
+.test-metric{cursor:default}
+.metric-num{font-size:2rem;font-weight:900;color:var(--accent);line-height:1;transition:all .4s ease;letter-spacing:-.02em}
+.test-metric:hover .metric-num{color:var(--gold);text-shadow:0 0 20px var(--gold-glow);transform:scale(1.05)}
+.metric-label{font-family:'Space Mono',monospace;font-size:.5rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:1px;font-weight:400}
+.test-quote{font-style:italic;font-size:.92rem;color:var(--text);padding:.5rem 1rem;border-left:2px solid rgba(90,143,168,.3);margin-bottom:.8rem}
+.test-links{display:flex;gap:.6rem;flex-wrap:wrap}
+.test-link{display:inline-flex;align-items:center;gap:.3rem;font-size:.65rem;color:var(--text-dim);background:rgba(255,255,255,.04);padding:5px 12px;border-radius:20px;text-decoration:none;font-weight:500;border:1px solid var(--border);transition:all .3s ease}
+.test-link:hover{background:var(--accent-glow);color:var(--text-bright);border-color:rgba(90,143,168,.3)}
+/* ===== INVESTMENT ===== */
+.investment{background:var(--gradient-section);position:relative;overflow:hidden}
+.investment::before{content:'';position:absolute;top:20%;right:-10%;width:500px;height:500px;background:radial-gradient(circle,var(--gold-glow) 0%,transparent 70%);opacity:.15;pointer-events:none}
+.inv-main{text-align:center;margin-bottom:2rem;position:relative;z-index:1}
+.inv-price{font-size:clamp(3rem,6vw,5rem);font-weight:900;color:var(--gold);cursor:default;transition:all .4s ease;letter-spacing:-.03em}
+.inv-price:hover{text-shadow:0 0 60px var(--gold-glow);transform:scale(1.02)}
+.inv-label{font-size:.9rem;color:var(--text-dim);margin-top:.3rem;font-weight:300}
+.inv-sub{font-family:'Space Mono',monospace;font-size:.7rem;color:var(--text-dim);margin-top:.5rem;letter-spacing:.5px}
+.pricing-options{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:2rem 0;position:relative;z-index:1}
+.pricing-card{padding:1.8rem;border-radius:12px;border:1px solid var(--border);background:var(--bg-card);text-align:center;transition:all .4s ease;cursor:default}
+.pricing-card:hover{border-color:rgba(90,143,168,.2);transform:translateY(-3px);box-shadow:0 15px 50px rgba(0,0,0,.3)}
+.pricing-card.highlighted{border-color:rgba(212,168,83,.25);background:rgba(212,168,83,.03)}
+.pricing-card.highlighted:hover{border-color:var(--gold);box-shadow:0 15px 50px rgba(212,168,83,.1)}
+.pc-title{font-family:'Space Mono',monospace;font-size:.55rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);margin-bottom:.5rem}
+.pc-price{font-size:2rem;font-weight:900;color:var(--text-bright)}
+.pc-price small{font-size:.8rem;font-weight:400;color:var(--text-dim)}
+.pc-detail{font-size:.72rem;color:var(--text-dim);margin-top:.3rem}
+.pc-detail b{color:var(--gold);font-weight:600}
+.inv-note{text-align:center;margin:1.5rem 0 2rem;padding:1.2rem;border-radius:10px;background:var(--bg-card);border:1px solid var(--border);font-size:.78rem;color:var(--text-dim);position:relative;z-index:1}
+.inv-note b{color:var(--text);font-weight:600}
+/* Calculator */
+.calculator{background:rgba(0,0,0,.2);border:1px solid var(--border);border-radius:16px;padding:2rem;margin:2rem 0;position:relative;z-index:1;backdrop-filter:blur(10px)}
+.calc-title{font-size:1.4rem;font-weight:700;color:var(--text-bright);margin-bottom:.3rem}
+.calc-subtitle{font-family:'Space Mono',monospace;font-size:.68rem;color:var(--text-dim);margin-bottom:2rem;letter-spacing:.5px}
+.slider-group{margin-bottom:1.3rem}
+.slider-label{display:flex;justify-content:space-between;margin-bottom:.4rem}
+.slider-name{font-size:.78rem;color:var(--text-dim);font-weight:500}
+.slider-value{font-family:'Space Mono',monospace;font-size:.78rem;color:var(--gold);font-weight:700}
+input[type="range"]{width:100%;-webkit-appearance:none;height:3px;background:rgba(255,255,255,.1);border-radius:2px;outline:none;transition:background .3s ease}
+input[type="range"]:hover{background:rgba(255,255,255,.15)}
+input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;background:var(--gold);border-radius:50%;cursor:pointer;transition:all .3s ease;box-shadow:0 0 0 0 var(--gold-glow)}
+input[type="range"]::-webkit-slider-thumb:hover{box-shadow:0 0 0 8px var(--gold-glow);transform:scale(1.1)}
+.calc-results{margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border)}
+.calc-primary{text-align:center;margin-bottom:1.5rem}
+.calc-primary-num{font-size:3rem;font-weight:900;color:var(--gold);line-height:1;letter-spacing:-.02em;transition:text-shadow .4s ease}
+.calc-primary-num:hover{text-shadow:0 0 40px var(--gold-glow)}
+.calc-primary-label{font-family:'Space Mono',monospace;font-size:.6rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:1.5px;font-weight:400;margin-top:.4rem}
+.calc-secondary{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;margin-bottom:1.2rem}
+.calc-sec-item{text-align:center;padding:.8rem;background:var(--bg-card);border-radius:8px;border:1px solid var(--border)}
+.calc-sec-num{font-size:1.3rem;font-weight:900;color:var(--text-bright)}
+.calc-sec-label{font-family:'Space Mono',monospace;font-size:.48rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:1px;font-weight:400}
+.calc-tertiary{text-align:center;padding:.8rem;background:var(--bg-card);border-radius:8px;border:1px solid var(--border);font-size:.72rem;color:var(--text-dim)}
+.calc-tertiary b{color:var(--text);font-weight:600}
+.exp-toggle{display:flex;align-items:center;justify-content:center;gap:.8rem;margin:1.2rem 0;font-size:.75rem;color:var(--text-dim)}
+.exp-toggle label{cursor:pointer;font-weight:500}
+.toggle-switch{position:relative;width:44px;height:24px;background:rgba(255,255,255,.1);border-radius:12px;cursor:pointer;transition:background .3s ease}
+.toggle-switch.on{background:var(--gold)}
+.toggle-dot{position:absolute;top:3px;left:3px;width:18px;height:18px;background:#fff;border-radius:50%;transition:transform .3s cubic-bezier(.25,.46,.45,.94)}
+.toggle-switch.on .toggle-dot{transform:translateX(20px)}
+.anchor-statement{text-align:center;margin-top:2.5rem;font-size:1.15rem;color:var(--text-dim);font-weight:300;font-style:italic;position:relative;z-index:1}
+/* ===== CTA ===== */
+.cta-section{text-align:center;position:relative;overflow:hidden}
+.cta-section::before{content:'';position:absolute;top:50%;left:50%;width:800px;height:800px;background:radial-gradient(circle,var(--accent-glow) 0%,transparent 60%);transform:translate(-50%,-50%);opacity:.2;pointer-events:none;animation:pulse-glow 8s ease-in-out infinite}
+.cta-headline{font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:800;color:var(--text-bright);line-height:1.25;margin-bottom:.8rem;position:relative;z-index:1}
+.cta-highlight{color:var(--gold);position:relative}
+.cta-highlight::after{content:'';position:absolute;bottom:-.05em;left:0;right:0;height:2px;background:var(--gold);opacity:.3}
+.cta-support{font-size:1rem;color:var(--text-dim);margin-bottom:2.5rem;font-weight:300;position:relative;z-index:1}
+.cta-btn{display:inline-block;padding:16px 52px;background:var(--accent);color:#fff;font-family:'Outfit',sans-serif;font-size:.85rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;border:none;border-radius:6px;cursor:pointer;transition:all .5s cubic-bezier(.25,.46,.45,.94);text-decoration:none;position:relative;z-index:1;overflow:hidden}
+.cta-btn::before{content:'';position:absolute;top:50%;left:50%;width:0;height:0;background:rgba(255,255,255,.12);border-radius:50%;transform:translate(-50%,-50%);transition:width .7s ease,height .7s ease}
+.cta-btn:hover{transform:translateY(-4px) scale(1.02);box-shadow:0 20px 60px rgba(90,143,168,.35)}
+.cta-btn:hover::before{width:400px;height:400px}
+.cta-footer{margin-top:3rem;font-family:'Space Mono',monospace;font-size:.6rem;color:var(--text-dim);letter-spacing:1px;position:relative;z-index:1}
+.page-footer{text-align:center;padding:3rem;font-family:'Space Mono',monospace;font-size:.55rem;color:rgba(255,255,255,.15);letter-spacing:2px;text-transform:uppercase}
+/* Reveal animation */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-left{opacity:0;transform:translateX(-20px);transition:opacity .7s ease,transform .7s ease}
+.reveal-left.visible{opacity:1;transform:translateX(0)}
+.stagger-1{transition-delay:.05s}.stagger-2{transition-delay:.1s}.stagger-3{transition-delay:.15s}.stagger-4{transition-delay:.2s}.stagger-5{transition-delay:.25s}
+/* Responsive */
+@media(max-width:768px){
+  section{padding:8vh 6vw}
+  .pipeline{flex-direction:column;align-items:center}
+  .pipe-arrow{transform:rotate(90deg)}
+  .zone-wrapper{flex-direction:column;align-items:center;padding:2.5rem .8rem 1rem}
+  .testimonial{flex-direction:column}
+  .test-photo-wrap{width:52px;height:52px}
+  .calc-secondary{grid-template-columns:1fr}
+  .pricing-options{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){.reveal,.reveal-left{opacity:1;transform:none;transition:none}*{animation:none!important;transition:none!important}}
+/* Bonus property promotion table */
+.bonus-section{background:rgba(0,0,0,.2);border:1px solid var(--border);border-radius:16px;padding:2rem;margin:2rem 0;position:relative;z-index:1}
+.bonus-title{font-size:1.2rem;font-weight:700;color:var(--text-bright);margin-bottom:.3rem}
+.bonus-subtitle{font-size:.78rem;color:var(--text-dim);margin-bottom:1.5rem;line-height:1.6}
+.bonus-table{border:1px solid var(--border);border-radius:8px;overflow:hidden}
+.bonus-row{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--border);transition:background .3s ease}
+.bonus-row:last-child{border-bottom:none}
+.bonus-row:hover{background:rgba(255,255,255,.03)}
+.bonus-header{background:rgba(255,255,255,.04)}
+.bonus-header .bonus-cell{font-family:'Space Mono',monospace;font-size:.6rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);padding:.8rem 1.2rem}
+.bonus-cell{padding:.8rem 1.2rem;font-size:.85rem;color:var(--text);display:flex;align-items:center}
+.bonus-highlight{color:var(--gold);font-weight:700;font-size:.95rem}
+.bonus-free .bonus-cell:first-child{color:var(--text-bright)}
+.bonus-each{font-size:.65rem;color:var(--text-dim);margin-left:.4rem;font-weight:400}
+.bonus-note{font-family:'Space Mono',monospace;font-size:.6rem;color:var(--text-dim);margin-top:1rem;letter-spacing:.5px;text-align:center}
+</style>
+</head>
+<body>
+<section class="opening" data-section="opening">
+  <div class="content" style="text-align:center;position:relative;z-index:1">
+    <div class="date">March 20, 2026</div>
+    <div class="name"><em>Steve</em>, this is for you.</div>
+    <div class="sub">Based on our conversation on Wednesday.</div>
+  </div>
+  <div class="scroll-hint"><span></span></div>
+</section>
+<section class="mirror" data-section="mirror">
+  <div class="content">
+    <div class="label reveal">What you shared with us</div>
+    <div class="quote-block reveal stagger-1"><div class="quote-text">"I really want to build a brand that people can rely on and that feels strong and exclusive."</div><div class="quote-context">On your vision</div></div>
+    <div class="quote-block reveal stagger-2"><div class="quote-text">"I'm a one-man show. I'm doing everything myself. I need to list, I need to do viewings, I need to do this and that."</div><div class="quote-context">On the daily reality</div></div>
+    <div class="quote-block reveal stagger-3"><div class="quote-text">"The key to growth is to get listings. I really want to focus on that."</div><div class="quote-context">On what matters most</div></div>
+    <div class="quote-block reveal stagger-4"><div class="quote-text">"I want predictability. I want to make sure because it's not always easy when you are in between sales."</div><div class="quote-context">On what you need</div></div>
+  </div>
+</section>
+<section class="diagnosis" data-section="diagnosis">
+  <div class="wide-content">
+    <div class="label reveal">What we see behind that</div>
+    <div class="diag-card reveal stagger-1"><div class="diag-headline">The service is ready. The system to fill it is not.</div><div class="diag-text">20 years of real estate experience. A strong personal brand forming around Sunny Steve. EXP behind you. 14 active listings. International buyers who trust you. Everything is built for scale. What is missing is a predictable way to fill the pipeline with listing leads, without depending on your own hours.</div></div>
+    <div class="diag-card reveal stagger-2"><div class="diag-headline">Referrals are powerful, but they are not a system.</div><div class="diag-text">Referrals brought you here and they will always matter. But referrals come when they come. You cannot plan around them. You cannot scale on them. You need a parallel channel that works while you are in viewings, on calls, or on the weekend.</div></div>
+    <div class="diag-card reveal stagger-3"><div class="diag-headline">The Algarve expat market is wide open for this.</div><div class="diag-text">40% of the population in the Algarve are expats. Most agents targeting this market are Portuguese consultants. An expat speaking to expats, who understands the journey of buying and settling here, is a completely different proposition. That story needs to reach people before they commit to three other agents.</div></div>
+    <div class="pipeline reveal">
+      <div class="pipe-card active"><div class="pipe-icon"><svg width="22" height="22" fill="none" stroke="var(--accent)" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10A15.3 15.3 0 0 1 12 2z"/></svg></div><div class="pipe-title">SunnySteve.com & Instagram</div><div class="pipe-status exists">Active</div></div>
+      <div class="pipe-arrow">→</div>
+      <div class="zone-wrapper"><div class="zone-label">Fluxe Zone</div>
+        <div class="pipe-card missing"><div class="pipe-icon"><svg width="22" height="22" fill="none" stroke="var(--gold)" stroke-width="1.5" viewBox="0 0 24 24"><path d="M15 10l-4 4l6 6l4-16l-18 7l4 2l2 6l3-4"/></svg></div><div class="pipe-title">Meta Ads to Algarve Expat Sellers</div><div class="pipe-status missing-s">Missing</div></div>
+        <div class="pipe-arrow">→</div>
+        <div class="pipe-card missing"><div class="pipe-icon"><svg width="22" height="22" fill="none" stroke="var(--gold)" stroke-width="1.5" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 3.07 4.18 2 2 0 0 1 5.08 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div><div class="pipe-title">First Call with Homeowner</div><div class="pipe-status missing-s">Missing</div></div>
+        <div class="pipe-arrow">→</div>
+        <div class="pipe-card missing"><div class="pipe-icon"><svg width="22" height="22" fill="none" stroke="var(--gold)" stroke-width="1.5" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div><div class="pipe-title">Exclusive Listing Contract</div><div class="pipe-status missing-s">Missing</div></div>
+      </div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-card active"><div class="pipe-icon"><svg width="22" height="22" fill="none" stroke="var(--accent)" stroke-width="1.5" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div class="pipe-title">Steve Sells the Property</div><div class="pipe-status exists">Ready</div></div>
+    </div>
+    <div class="pipeline-footer reveal">Fluxe connects your online presence to exclusive listings.</div>
+  </div>
+</section>
+<section class="vision" data-section="vision">
+  <div class="content">
+    <div class="label reveal">Where this takes you</div>
+    <div class="vision-line reveal-left stagger-1"><div class="vision-text">Two months from now, your phone buzzes with <span class="vision-highlight">listing leads from homeowners in Lagos</span> while you are doing a viewing in Portimao.</div></div>
+    <div class="vision-line reveal-left stagger-2"><div class="vision-text">Sellers already know your face from the videos. The first call <span class="vision-highlight">feels like a warm introduction, not a cold pitch.</span></div></div>
+    <div class="vision-line reveal-left stagger-3"><div class="vision-text">You stop wondering where the next listing comes from. <span class="vision-highlight">Sunny Steve becomes a reference in the Algarve expat market.</span></div></div>
+    <div class="vision-line reveal-left stagger-4"><div class="vision-text">And when you are ready to build your team at EXP, <span class="vision-highlight">the system is already running.</span> You hand it over and keep growing.</div></div>
+  </div>
+</section>
+<section class="bridge" data-section="bridge">
+  <div class="content">
+    <div class="label reveal">How we get there</div>
+    <div class="timeline">
+      <div class="tl-item reveal stagger-1"><div class="tl-dot"></div><div class="tl-tag">Week 1 · Onboarding</div><div class="tl-desc">We connect to your Facebook and Instagram. Set up the CRM and communication channels. Onboarding meeting to align on goals and the right approach to leads. Strategic analysis of Lagos and the expat market. Script creation for your video campaigns.</div></div>
+      <div class="tl-item reveal stagger-2"><div class="tl-dot"></div><div class="tl-tag">Week 2 · Video Shoots</div><div class="tl-desc">Our videographer comes down to the Algarve. We record a set of campaigns with you on location. You bring the expertise, we handle everything else.</div></div>
+      <div class="tl-item reveal stagger-3"><div class="tl-dot"></div><div class="tl-tag">Week 3 · Editing & Setup</div><div class="tl-desc">Video editing and post-production. Campaign configuration, landing pages, CRM setup. Everything prepared for launch.</div></div>
+      <div class="tl-divider reveal"><span class="tl-divider-pill">Start of the 6-month contract</span></div>
+      <div class="tl-item reveal stagger-1"><div class="tl-dot key"></div><div class="tl-tag">Week 4 · Campaigns Go Live</div><div class="tl-desc">Campaigns launch on Facebook and Instagram, targeting homeowners in your area. Daily monitoring begins. First leads start arriving on your phone.</div></div>
+      <div class="tl-item reveal stagger-2"><div class="tl-dot"></div><div class="tl-tag">Weeks 5-6 · First Leads</div><div class="tl-desc">Leads arrive. We analyse your first calls together and refine the approach. This is where the learning curve matters most.</div></div>
+      <div class="tl-item reveal stagger-3"><div class="tl-dot"></div><div class="tl-tag">Months 1-2 · Optimisation</div><div class="tl-desc">Continuous campaign optimisation. The algorithm learns. Fewer total leads, more qualified contacts. Each week, lead quality improves.</div></div>
+      <div class="tl-item reveal stagger-4"><div class="tl-dot"></div><div class="tl-tag">Months 2-3 · Cruising Speed</div><div class="tl-desc">System stabilises. Monthly strategy meetings begin. As first listings come in, bonus campaigns to promote your properties (video, drone, paid traffic).</div></div>
+      <div class="tl-item reveal stagger-5"><div class="tl-dot"></div><div class="tl-tag">Months 3-6 · Scale</div><div class="tl-desc">Predictable volume of qualified contacts. Professional promotion of every listed property. Continuous optimisation and monthly strategy meetings.</div></div>
+    </div>
+    <div class="tl-note reveal">The 6-month contract only begins when campaigns go live. All preparation work happens before. If campaigns are paused, that time is added to the end.</div>
+  </div>
+</section>
+<section class="social-proof" data-section="social-proof">
+  <div class="content">
+    <div class="label reveal">Who already walked this path</div>
+    <div class="testimonial reveal stagger-1">
+      <div class="test-photo-wrap"><img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAD8APwDACIAAREBAhEB/9sAQwAIBgYHBgUIBwcHCQkICgwUDQwLCwwZEhMPFB0aHx4dGhwcICQuJyAiLCMcHCg3KSwwMTQ0NB8nOT04MjwuMzQy/9sAQwEJCQkMCwwYDQ0YMiEcITIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIy/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMAAAERAhEAPwD36iiigAooooAKKKKACiiszW/EGk+HNPa+1e/htLccbpG5Y+igcsfYAmgDTqrf6jZaZatdX93BaQL1knkCKPxJArwTxd+0LcStJa+FLPyU6fbLpdz/AFVOg+rZ+gryu5HiPxZdfa9Su7m6cniS5kJAHoAeAPYULXRF06U6kuWCuz6H1748+ENJLRWTXOqzDj/R02oD7s2PzANec6t+0R4ju9y6VpllYoTwz5mcfjwP0rivi14YufFfjCS5sbmYaFbBLS2thKVRcZ3yY9WP/jtdl4T0Gy8L6EllaxgMPmkbGSzfzqnFLc6qeX04L2mIbbel10+Z0lv8SviNrJH2bxDeYPa2iEP8kAq2nif4sI2f7emJ9JIYyPzAqHzIAc+aB6ZrSt4LVl3tLlc4AIraGDhL3ub8TqjTjH7TP/Z" class="test-photo" alt="Joao Teixeira"></div>
+      <div class="test-content">
+        <div class="test-name">Joao Teixeira & Filipe Felizardo</div>
+        <div class="test-role">Real Estate Team · Sintra · 12 months with Fluxe</div>
+        <div class="test-story">Started as a two-person team doing cold prospecting. Needed volume without burning all their time on lead generation. Scaled to a full team with dedicated buyer agents and an assistant. Now doubling their ad budget because the numbers work.</div>
+        <div class="test-metrics">
+          <div class="test-metric"><div class="metric-num" data-count="21">0</div><div class="metric-label">Listings acquired</div></div>
+          <div class="test-metric"><div class="metric-num" data-prefix="€" data-count="150000" data-format="currency">0</div><div class="metric-label">Revenue generated</div></div>
+        </div>
+        <div class="test-quote">"The problem is created. We need to find solutions. And we want to grow more and double the campaigns."</div>
+        <div class="test-links"><a href="tel:+351933086755" class="test-link">📞 +351 933 086 755</a><a href="https://www.youtube.com/watch?v=3qxhlg7olQw" target="_blank" class="test-link">▶ Watch interview</a><a href="https://www.facebook.com/ads/library/?active_status=all&ad_type=housing_ads&country=PT&is_targeted_country=false&media_type=all&search_type=page&sort_data[mode]=total_impressions&sort_data[direction]=desc&view_all_page_id=338339609354355" target="_blank" class="test-link">📣 View Meta Ads</a></div>
+      </div>
+    </div>
+    <div class="testimonial reveal stagger-2">
+      <div class="test-photo-wrap"><img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAD8APwDACIAAREBAhEB/9sAQwAIBgYHBgUIBwcHCQkICgwUDQwLCwwZEhMPFB0aHx4dGhwcICQuJyAiLCMcHCg3KSwwMTQ0NB8nOT04MjwuMzQy/9sAQwEJCQkMCwwYDQ0YMiEcITIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIy/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMAAAERAhEAPwD36iiigAooooAKKKKACiiql/qNppdo91e3CQwoCSzn09B1P4UAW6gur21sbdp7y4it4V6ySuFUfia8o8ffFe8sfDUd74cRIxOwCz3CBmAPcLnAP1z9K8r0bU7/AMRi4n1fUpry5ZgF8+QsfoAeAPYULXRF06U6kuWCuz6H1748+ENJLRWTXOqzDj/R02oD7s2PzANec6t+0R4ju9y6VpllYoTwz5mcfjwP0rifi14YufFfjCS5sbmYaFbBLS2thKVRcZ3yY9WP/jtdl4T0Gy8L6EllaxgMPmkbGSzfzqnFLc6qeX04L2mIbbel10+Z0lv8SviNrJH2bxDeYPa2iEP8kAq2nif4sI2f7emJ9JIYyPzAqHzIAc+aB6ZrSt4LVl3tLlc4AIraGDhL3ub8TqjTjH7TP/Z" class="test-photo" alt="Vera Rodrigues"></div>
+      <div class="test-content">
+        <div class="test-name">Vera Rodrigues</div>
+        <div class="test-role">Real Estate Consultant · Loures · 5 months with Fluxe</div>
+        <div class="test-story">Spent 7 years working almost exclusively with buyers. No listing acquisition system. In 5 months she signed 8 listing contracts with a combined portfolio of 2.8 million euros. Several sellers also became buyers, generating multiple transactions per lead.</div>
+        <div class="test-metrics">
+          <div class="test-metric"><div class="metric-num" data-count="8">0</div><div class="metric-label">Listings in 5 months</div></div>
+          <div class="test-metric"><div class="metric-num" data-prefix="€" data-count="72000" data-format="currency">0</div><div class="metric-label">Revenue generated</div></div>
+        </div>
+        <div class="test-quote">"If it works for others, it will work for me. It was a leap of faith, and it paid off."</div>
+        <div class="test-links"><a href="tel:+351962090638" class="test-link">📞 +351 962 090 638</a><a href="https://www.youtube.com/watch?v=3SiHR8-GMl0" target="_blank" class="test-link">▶ Watch interview</a><a href="https://www.facebook.com/ads/library/?active_status=all&ad_type=housing_ads&country=PT&is_targeted_country=false&media_type=all&search_type=page&sort_data[mode]=total_impressions&sort_data[direction]=desc&view_all_page_id=1390496724535733" target="_blank" class="test-link">📣 View Meta Ads</a></div>
+      </div>
+    </div>
+    <div class="testimonial reveal stagger-3">
+      <div class="test-photo-wrap"><img src="data:image/jpeg;base64,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" class="test-photo" alt="Nuno Canossa"></div>
+      <div class="test-content">
+        <div class="test-name">Nuno Canossa</div>
+        <div class="test-role">Real Estate Consultant · Porto (Maia) · 7 months with Fluxe</div>
+        <div class="test-story">13 years of experience in the premium segment. When his previous lead source dried up, he needed a system that matched his brand. In 7 months he acquired 9 listings worth over 3.1 million euros in portfolio value.</div>
+        <div class="test-metrics">
+          <div class="test-metric"><div class="metric-num" data-count="9">0</div><div class="metric-label">Listings in 7 months</div></div>
+          <div class="test-metric"><div class="metric-num" data-prefix="€" data-count="41000" data-format="currency">0</div><div class="metric-label">Revenue generated</div></div>
+        </div>
+        <div class="test-quote">"I needed a service compatible with my brand and my way of working. I found it."</div>
+        <div class="test-links"><a href="tel:+351925379919" class="test-link">📞 +351 925 379 919</a><a href="https://www.youtube.com/watch?v=G0TenQcgs2M" target="_blank" class="test-link">▶ Watch interview</a><a href="https://www.facebook.com/ads/library/?active_status=all&ad_type=housing_ads&country=PT&is_targeted_country=false&media_type=all&search_type=page&sort_data[mode]=total_impressions&sort_data[direction]=desc&view_all_page_id=686482727886433" target="_blank" class="test-link">📣 View Meta Ads</a></div>
+      </div>
+    </div>
+    <div class="more-ads reveal" style="text-align:center;margin-top:2rem"><a href="https://drive.google.com/drive/folders/1PVsEnm2E2jpRMjZhlg1VegjNUbHXpwS4?usp=share_link" target="_blank" class="test-link" style="font-size:.75rem;padding:8px 20px">📂 See more campaign examples</a></div>
+  </div>
+</section>
+<section class="investment" data-section="investment">
+  <div class="content">
+    <div class="label reveal">What this means in numbers</div>
+    <div class="inv-main reveal">
+      <div class="inv-price">€7,500</div>
+      <div class="inv-label">Fluxe service fee (+ VAT)</div>
+      <div class="inv-sub">+ €500/month advertising budget paid directly to Meta</div>
+    </div>
+    <div class="pricing-options reveal">
+      <div class="pricing-card highlighted">
+        <div class="pc-title">Pay in full</div>
+        <div class="pc-price">€7,500</div>
+        <div class="pc-detail">One-time payment</div>
+        <div class="pc-detail">+ <b>€500/mo</b> ad budget = <b>€10,500</b> total</div>
+      </div>
+      <div class="pricing-card">
+        <div class="pc-title">Monthly</div>
+        <div class="pc-price">€1,500<small>/mo</small></div>
+        <div class="pc-detail">6 months = €9,000</div>
+        <div class="pc-detail">+ <b>€500/mo</b> ad budget = <b>€12,000</b> total</div>
+      </div>
+    </div>
+    <div class="inv-note reveal"><b>All values + VAT.</b> The €500/month ad budget is paid directly to Meta, not to Fluxe. It is what fuels the campaigns.</div>
+
+    <div class="bonus-section reveal">
+      <div class="bonus-title">Property Promotion Campaigns</div>
+      <div class="bonus-subtitle">As you acquire listings, we produce professional video campaigns to promote each property. Vertical and square formats, drone footage, scripting, editing, campaign management, and CRM integration included.</div>
+      <div class="bonus-table">
+        <div class="bonus-row bonus-header"><div class="bonus-cell">Listing</div><div class="bonus-cell">Cost</div></div>
+        <div class="bonus-row bonus-free"><div class="bonus-cell">1st listing of the month</div><div class="bonus-cell bonus-highlight">Free</div></div>
+        <div class="bonus-row"><div class="bonus-cell">2nd and 3rd listings</div><div class="bonus-cell">€50 <span class="bonus-each">each</span></div></div>
+        <div class="bonus-row"><div class="bonus-cell">4th listing onwards</div><div class="bonus-cell">€75 <span class="bonus-each">each</span></div></div>
+      </div>
+      <div class="bonus-note">Resets every month. Minimum ad budget per campaign: €100 (paid to Meta).</div>
+    </div>
+    <div class="calculator reveal">
+      <div class="calc-title">What could this represent in revenue?</div>
+      <div class="calc-subtitle">Adjust the values to your scenario to see the projection.</div>
+      <div class="slider-group"><div class="slider-label"><span class="slider-name">Listings in 6 months</span><span class="slider-value" id="listingsVal">6</span></div><input type="range" min="3" max="15" value="6" id="listingsSlider"></div>
+      <div class="slider-group"><div class="slider-label"><span class="slider-name">Average property value</span><span class="slider-value" id="propVal">€450,000</span></div><input type="range" min="200000" max="800000" step="25000" value="450000" id="propSlider"></div>
+      <div class="slider-group"><div class="slider-label"><span class="slider-name">Commission rate</span><span class="slider-value" id="commVal">4%</span></div><input type="range" min="2" max="6" step="0.5" value="4" id="commSlider"></div>
+      <div class="slider-group"><div class="slider-label"><span class="slider-name">Solo deals (vs. shared 50/50)</span><span class="slider-value" id="soloVal">50%</span></div><input type="range" min="20" max="100" step="10" value="50" id="soloSlider"></div>
+      <div class="slider-group"><div class="slider-label"><span class="slider-name">Conversion rate (listings that sell)</span><span class="slider-value" id="convVal">60%</span></div><input type="range" min="30" max="90" step="10" value="60" id="convSlider"></div>
+      <div class="slider-group"><div class="slider-label"><span class="slider-name">Cost per listing (photos, legal, promo)</span><span class="slider-value" id="costVal">€500</span></div><input type="range" min="0" max="2000" step="100" value="500" id="costSlider"></div>
+      <div class="exp-toggle"><label>EXP cap reached (above €80k)</label><div class="toggle-switch" id="expToggle" onclick="this.classList.toggle('on');updateCalc()"><div class="toggle-dot"></div></div><label id="expToggleLabel" style="min-width:30px">No</label></div>
+      <div class="calc-results">
+        <div class="calc-primary"><div class="calc-primary-num" id="calcRevenue">€0</div><div class="calc-primary-label">Your net revenue (after EXP split)</div></div>
+        <div class="calc-secondary">
+          <div class="calc-sec-item"><div class="calc-sec-num" id="calcProfit">€0</div><div class="calc-sec-label">Profit after all costs</div></div>
+          <div class="calc-sec-item"><div class="calc-sec-num" id="calcROI">0x</div><div class="calc-sec-label">Return on investment</div></div>
+          <div class="calc-sec-item"><div class="calc-sec-num" id="calcDeals">0</div><div class="calc-sec-label">Deals closed</div></div>
+        </div>
+        <div class="calc-tertiary" id="calcBreakdown"></div>
+        <div style="text-align:center;margin-top:.6rem;font-size:.62rem;color:var(--text-dim);font-style:italic" id="calcExpNote"></div>
+      </div>
+    </div>
+    <div class="anchor-statement reveal">One average sale in Lagos pays for the entire investment.</div>
+  </div>
+</section>
+<section class="cta-section" data-section="next-step">
+  <div class="content">
+    <div class="cta-headline reveal">Sunny Steve deserves <span class="cta-highlight">a listing acquisition system.</span><br>We build it.</div>
+    <div class="cta-support reveal">You take care of the rest.</div>
+    <a href="https://wa.me/351911072379?text=Hi%20Nuno%2C%20let%27s%20talk%20about%20getting%20started." class="cta-btn reveal" data-cta="whatsapp">Let's start</a>
+    <div class="cta-footer reveal">Prepared for Steve Marqué · March 19, 2026</div>
+  </div>
+</section>
+<footer class="page-footer">Fluxe Agency · Confidential</footer>
+<script>
+const obs=new IntersectionObserver(e=>{e.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');if(!e.target.classList.contains('reveal')&&!e.target.classList.contains('reveal-left'))return}})},{threshold:.12,rootMargin:'0px 0px -50px 0px'});
+document.querySelectorAll('.reveal,.reveal-left').forEach(el=>obs.observe(el));
+function animateCount(el){const target=parseFloat(el.dataset.count);const fmt=el.dataset.format;const prefix=el.dataset.prefix||'';const suffix=el.dataset.suffix||'';const duration=2000;const start=performance.now();function update(now){const elapsed=now-start;const progress=Math.min(elapsed/duration,1);const eased=1-Math.pow(1-progress,3);const current=Math.round(target*eased);if(fmt==='currency'){el.textContent=prefix+current.toLocaleString('en')+suffix}else{const d=parseInt(el.dataset.decimals)||0;el.textContent=prefix+(target*eased).toFixed(d)+suffix}if(progress<1)requestAnimationFrame(update)}requestAnimationFrame(update)}
+const cObs=new IntersectionObserver(e=>{e.forEach(e=>{if(e.isIntersecting&&!e.target.dataset.counted){e.target.dataset.counted='true';animateCount(e.target)}})},{threshold:.5});
+document.querySelectorAll('[data-count]').forEach(el=>cObs.observe(el));
+function alignPipeline(){const cards=document.querySelectorAll('.pipe-card');if(!cards.length)return;let maxH=0;cards.forEach(c=>{c.style.minHeight='';maxH=Math.max(maxH,c.offsetHeight)});cards.forEach(c=>{c.style.minHeight=maxH+'px'})}
+window.addEventListener('load',()=>setTimeout(alignPipeline,200));
+window.addEventListener('resize',alignPipeline);
+function updateCalc(){
+  const listings=parseInt(document.getElementById('listingsSlider').value);
+  const propValue=parseInt(document.getElementById('propSlider').value);
+  const commRate=parseFloat(document.getElementById('commSlider').value)/100;
+  const soloRate=parseInt(document.getElementById('soloSlider').value)/100;
+  const convRate=parseInt(document.getElementById('convSlider').value)/100;
+  const costPerListing=parseInt(document.getElementById('costSlider').value);
+  const capReached=document.getElementById('expToggle').classList.contains('on');
+  document.getElementById('listingsVal').textContent=listings;
+  document.getElementById('propVal').textContent='€'+propValue.toLocaleString('en');
+  document.getElementById('commVal').textContent=(commRate*100)+'%';
+  document.getElementById('soloVal').textContent=(soloRate*100)+'%';
+  document.getElementById('convVal').textContent=(convRate*100)+'%';
+  document.getElementById('costVal').textContent='€'+costPerListing.toLocaleString('en');
+  document.getElementById('expToggleLabel').textContent=capReached?'Yes':'No';
+  const deals=Math.round(listings*convRate);
+  const soloDeals=Math.round(deals*soloRate);
+  const sharedDeals=deals-soloDeals;
+  const commission=propValue*commRate;
+  const soloGross=soloDeals*commission;
+  const sharedGross=sharedDeals*(commission*0.5);
+  const totalGross=soloGross+sharedGross;
+  const steveRate=capReached?1.0:0.75;
+  const steveNet=totalGross*steveRate;
+  const expNote=capReached?'Post-cap: you keep 100% of commissions.':'Pre-cap: you keep 75% (EXP takes 25% until €20k paid to them).';
+  const operationalCosts=listings*costPerListing;
+  const totalInvestment=10500;
+  const profit=steveNet-totalInvestment-operationalCosts;
+  const roi=steveNet/(totalInvestment+operationalCosts);
+  document.getElementById('calcRevenue').textContent='€'+Math.round(steveNet).toLocaleString('en');
+  document.getElementById('calcProfit').textContent='€'+Math.round(profit).toLocaleString('en');
+  document.getElementById('calcROI').textContent=roi.toFixed(1)+'x';
+  document.getElementById('calcDeals').textContent=deals;
+  document.getElementById('calcBreakdown').innerHTML='Fluxe: <b>€10,500</b> + Operational: <b>€'+operationalCosts.toLocaleString('en')+'</b> = Total costs: <b>€'+(totalInvestment+operationalCosts).toLocaleString('en')+'</b>';
+  document.getElementById('calcExpNote').textContent=expNote;
+}
+document.querySelectorAll('input[type="range"]').forEach(s=>{s.addEventListener('input',updateCalc)});
+updateCalc();
+// Parallax on mouse move for opening
+document.querySelector('.opening').addEventListener('mousemove',e=>{const x=(e.clientX/window.innerWidth-.5)*20;const y=(e.clientY/window.innerHeight-.5)*20;e.currentTarget.querySelector('.content').style.transform=`translate(${x*.3}px,${y*.3}px)`});
+</script>
+
+<!-- Fluxe Proposal Tracking -->
+<script>
+  window.FLUXE_PROPOSAL_ID = 'steve-marque-2026-03';
+  window.FLUXE_ANALYTICS_URL = 'https://fluxe-analytics.nuno18pereirasantos.workers.dev';
+</script>
+<script>
+(function(){
+  'use strict';
+  var PID = window.FLUXE_PROPOSAL_ID, URL = window.FLUXE_ANALYTICS_URL;
+  if (!PID || !URL) return;
+  var ep = URL + '/api/event';
+  function t(type, data) {
+    var p = JSON.stringify({proposal_id: PID, type: type, data: data});
+    navigator.sendBeacon ? navigator.sendBeacon(ep, p) : fetch(ep, {method:'POST', headers:{'Content-Type':'application/json'}, body:p, keepalive:true}).catch(function(){});
+  }
+  // Page view
+  t('page_view', {referrer: document.referrer||'direct', url: location.href, screen: innerWidth+'x'+innerHeight});
+  // Scroll depth by section
+  var tracked = new Set(), scrollT;
+  function chk() {
+    document.querySelectorAll('[data-section]').forEach(function(el){
+      var n = el.getAttribute('data-section');
+      if (tracked.has(n)) return;
+      var r = el.getBoundingClientRect();
+      if (r.top < innerHeight*0.75 && r.bottom > 0) { tracked.add(n); t('scroll_depth', {section:n, order:tracked.size}); }
+    });
+    var pct = Math.round((scrollY+innerHeight)/document.body.scrollHeight*100);
+    [25,50,75,100].forEach(function(m){ var k='p'+m; if(pct>=m&&!tracked.has(k)){tracked.add(k);t('scroll_milestone',{percent:m});} });
+  }
+  addEventListener('scroll', function(){clearTimeout(scrollT);scrollT=setTimeout(chk,200);}, {passive:true});
+  setTimeout(chk, 1000);
+  // Time on page
+  var st = Date.now(), lp = 0;
+  setInterval(function(){ if(document.hidden)return; var s=Math.round((Date.now()-st)/1000); if(s>lp+25){lp=s;t('time_on_page',{seconds:s});} }, 30000);
+  function fin(){ t('time_on_page',{seconds:Math.round((Date.now()-st)/1000),final:true}); }
+  addEventListener('beforeunload', fin);
+  document.addEventListener('visibilitychange', function(){ if(document.hidden) fin(); });
+  // CTA clicks
+  document.addEventListener('click', function(e){
+    var c = e.target.closest('[data-cta]');
+    if(c) t('cta_click', {cta_name:c.getAttribute('data-cta'), cta_text:c.textContent.trim().substring(0,100)});
+    var l = e.target.closest('a[href],button');
+    if(l && !c){ var h=l.getAttribute('href')||'';
+      if(h.startsWith('tel:')||h.startsWith('mailto:')||h.startsWith('https://wa.me'))
+        t('cta_click',{cta_name:h.startsWith('tel:')?'phone':h.startsWith('mailto:')?'email':'whatsapp',cta_text:l.textContent.trim().substring(0,100),href:h});
+    }
+  });
+})();
+</script>
+</body>
+</html>
